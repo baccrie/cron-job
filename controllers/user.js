@@ -5,3 +5,8 @@ const getUserInfo = (req, res) => {
 const saveUserInfo = (req, res, next) => {
   console.log("User Info getting in progress...");
 };
+
+module.exports = {
+  getUserInfo,
+  saveUserInfo,
+};
