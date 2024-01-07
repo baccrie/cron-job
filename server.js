@@ -2,6 +2,8 @@ const express = require("express");
 const bodyparser = require("body-parser");
 const path = require("path");
 const mongoose = require("mongoose");
+const cron = require("node-cron");
+const birthdayMesage = require("./utils/birthdayMessage.js");
 require("dotenv").config();
 
 const app = express();
@@ -9,6 +11,8 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 const userRouter = require("./routes/user");
+
+cron.schedule("0", "7", "*", "*", "*", bithdayMessage);
 
 app.use(bodyparser.json());
 app.use(express.static(path.join(__dirname, "public")));
@@ -18,6 +22,18 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/v1/user", userRouter);
+
+// error handler
+app.use((req, res, next) => {
+  if (!err.statusCode) {
+    err.statusCode = 500;
+  }
+
+  return res.status(err.statusCode).json({
+    status: "error",
+    message: err.message,
+  });
+});
 
 mongoose
   .connect(`${process.env.MONGODB_URI}`)
