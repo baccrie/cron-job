@@ -1,0 +1,20 @@
+{
+  "name": "cron-job",
+  "version": "1.0.0",
+  "description": "task Scheduler for birthday wishes",
+  "main": "server.js",
+  "scripts": {
+    "test": "node server",
+    "dev": "nodemon server"
+  },
+  "keywords": [
+    "ALt-School",
+    "NodeJS",
+    "JavaScript"
+  ],
+  "author": "baccrie",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  }
+}
