@@ -12,9 +12,9 @@ const User = new Schema({
   },
 
   birthday: {
-    type: Date,
+    type: String,
     required: true,
   },
 });
 
-module.exports = model(User, "user");
+module.exports = model("user", User);

@@ -11,11 +11,12 @@ const PORT = process.env.PORT || 5000;
 const userRouter = require("./routes/user");
 
 app.use(bodyparser.json());
-app.use(express.static(path.join(__dirname, "public", "index.html")));
+app.use(express.static(path.join(__dirname, "public")));
 
-app.use("/", (req, res) => {
+app.get("/", (req, res) => {
   res.status(200).json({ message: "api working" });
 });
+
 app.use("/api/v1/user", userRouter);
 
 mongoose
