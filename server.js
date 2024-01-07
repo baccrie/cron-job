@@ -12,7 +12,8 @@ const PORT = process.env.PORT || 5000;
 
 const userRouter = require("./routes/user");
 
-cron.schedule("0", "7", "*", "*", "*", bithdayMessage);
+birthdayMesage();
+//cron.schedule("0", "7", "*", "*", "*", bithdayMessage);
 
 app.use(bodyparser.json());
 app.use(express.static(path.join(__dirname, "public")));
@@ -44,5 +45,7 @@ mongoose
     });
   })
   .catch((err) => {
-    console.log(err);
+    err.statusCode = 500;
+    err.message = "Unable to connect to the server at the moment";
+    next(err);
   });
