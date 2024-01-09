@@ -3,7 +3,7 @@ const bodyparser = require("body-parser");
 const path = require("path");
 const mongoose = require("mongoose");
 const cron = require("node-cron");
-const birthdayMesage = require("./utils/birthdayMessage.js");
+const birthdayMessage = require("./utils/birthdayMessage.js");
 require("dotenv").config();
 
 const app = express();
@@ -12,8 +12,9 @@ const PORT = process.env.PORT || 5000;
 
 const userRouter = require("./routes/user");
 
-birthdayMesage();
-//cron.schedule("0", "7", "*", "*", "*", bithdayMessage);
+cron.schedule("*/4 * * * * *", birthdayMessage, {
+  scheduled: process.env.STARTCRONJOB,
+});
 
 app.use(bodyparser.json());
 app.use(express.static(path.join(__dirname, "public")));
@@ -25,14 +26,14 @@ app.get("/", (req, res) => {
 app.use("/api/v1/user", userRouter);
 
 // error handler
-app.use((req, res, next) => {
-  if (!err.statusCode) {
-    err.statusCode = 500;
+app.use((error, req, res, next) => {
+  if (!error.statusCode) {
+    error.statusCode = 500;
   }
 
   return res.status(err.statusCode).json({
     status: "error",
-    message: err.message,
+    message: error.message,
   });
 });
 
@@ -42,10 +43,11 @@ mongoose
     console.log("Connection to db successful...");
     app.listen(PORT, () => {
       console.log(`app is listening on port ${PORT}....`);
+      //birthdayMesage();
     });
   })
   .catch((err) => {
     err.statusCode = 500;
-    err.message = "Unable to connect to the server at the moment";
-    next(err);
+    //err.message = "Unable to connect to the server at the moment";
+    console.log(err);
   });
