@@ -12,7 +12,7 @@ const PORT = process.env.PORT || 5000;
 
 const userRouter = require("./routes/user");
 
-cron.schedule("*/4 * * * * *", birthdayMessage, {
+cron.schedule("0 0 7 * * *", birthdayMessage, {
   scheduled: process.env.STARTCRONJOB,
 });
 
@@ -31,7 +31,7 @@ app.use((error, req, res, next) => {
     error.statusCode = 500;
   }
 
-  return res.status(err.statusCode).json({
+  return res.status(error.statusCode).json({
     status: "error",
     message: error.message,
   });
