@@ -8,9 +8,6 @@ const birthdayMesage = async () => {
   const today = new Date();
   const allUsers = await User.find();
 
-  console.log(allUsers[8].birthday.getUTCDate(), today.getUTCDate());
-  //let usersCelebratingToday = [];
-
   const usersCelebratingToday = allUsers.filter((users) => {
     return (
       users.birthday.getUTCDate() === today.getUTCDate() &&
@@ -18,7 +15,7 @@ const birthdayMesage = async () => {
     );
   });
 
-  console.log(usersCelebratingToday);
+  //console.log(usersCelebratingToday);
   if (!usersCelebratingToday) {
     console.log("No User Celebrating today");
   } else {
