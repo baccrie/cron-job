@@ -6,6 +6,7 @@ const getUserInfo = (req, res) => {
 };
 
 const saveUserInfo = (req, res, next) => {
+  console.log(req.body);
   const dob = new Date(req.body.birthday);
   dob.setMinutes(dob.getMinutes() + dob.getTimezoneOffset());
 
@@ -25,6 +26,7 @@ const saveUserInfo = (req, res, next) => {
 
   //console.log();
   const user = new User(req.body);
+  console.log(user.birthday.getYear() === new Date().getYear());
   // user
   //   .save()
   //   .then((result) => {
