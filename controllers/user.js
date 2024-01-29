@@ -3,7 +3,9 @@ const userSchema = require("../validation/user");
 
 const getUserInfo = (req, res) => {
   console.log("working");
-  res.render("index");
+  res.render("index", {
+    err: "",
+  });
 };
 
 const saveUserInfo = (req, res, next) => {
