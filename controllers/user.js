@@ -2,7 +2,8 @@ const User = require("../model/users");
 const userSchema = require("../validation/user");
 
 const getUserInfo = (req, res) => {
-  res.sendFile("index.html");
+  console.log("working");
+  res.render("index");
 };
 
 const saveUserInfo = (req, res, next) => {
@@ -13,26 +14,34 @@ const saveUserInfo = (req, res, next) => {
   req.body.birthday = dob;
   console.log(req.body);
 
-  // validation with joi
+  // validation with joi upcoming
+
   const { username, email, birthday } = req.body;
   const { result, error } = userSchema.validate(req.body);
 
   if (error) {
-    return res.status(401).json({
-      status: "errr",
-      msg: error.details[0].message,
+    return res.render("index", {
+      status: "NOTOK",
+      err: error.details[0].message,
     });
   }
 
-  const user = new User(req.body);
-  user
-    .save()
-    .then((result) => {
-      res.status(200).json({
-        status: "OK",
-        detail: result,
-      });
-      //console.log(result);
+  // check existing user
+  User.findOne({ email })
+    .then((checkUser) => {
+      if (checkUser) {
+        return res.render("index", {
+          err: "User with email already exists",
+        });
+      } else {
+        const user = new User(req.body);
+        user.save().then((result) => {
+          console.log("saving ongoing");
+          return res.send(
+            `<h3 style='margin: auto'>Submission Successful</h3>`
+          );
+        });
+      }
     })
     .catch((err) => {
       err.statusCode = 401;

@@ -80,7 +80,7 @@
 
     <form action="/api/v1/user/saveInfo" method="post">
       <div class="imgcontainer">
-        <img src="img_avatar2.png" alt="Avatar" class="avatar" />
+        <p style="color: red"><% if (err) { %> <%= err %> <% } %></p>
       </div>
 
       <div class="container">

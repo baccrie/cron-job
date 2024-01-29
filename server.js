@@ -17,6 +17,9 @@ const userRouter = require("./routes/user");
 cron.schedule("0 7 * * *", birthdayMessage, {
   scheduled: process.env.STARTCRONJOB,
 });
+// templating engines
+app.set("view engine", "ejs");
+app.set("views", "views");
 
 app.use(bodyparser.json());
 app.use(
@@ -38,9 +41,8 @@ app.use((error, req, res, next) => {
     error.statusCode = 500;
   }
 
-  return res.status(error.statusCode).json({
-    status: "error",
-    message: error.message,
+  return res.render("index", {
+    err: err.message,
   });
 });
 
