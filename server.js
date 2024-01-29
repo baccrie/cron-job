@@ -42,7 +42,7 @@ app.use((error, req, res, next) => {
   }
 
   return res.render("index", {
-    err: err.message,
+    err: error.message,
   });
 });
 
